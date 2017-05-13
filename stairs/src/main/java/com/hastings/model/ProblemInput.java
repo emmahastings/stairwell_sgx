@@ -13,6 +13,9 @@ public class ProblemInput {
 
     private int stepsPerStride;
 
+    public ProblemInput() {
+    }
+
     public ProblemInput(int[] numberOfStepsPerFlight, int stepsPerStride) {
         this.numberOfStepsPerFlight = numberOfStepsPerFlight;
         this.stepsPerStride = stepsPerStride;
