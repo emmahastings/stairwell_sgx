@@ -38,6 +38,7 @@ public class InputProcessingService {
 
     /**
      * Calculate strides used to ascend a flight
+     * by subtracting steps until there are no stairs left while tracking strides used.
      *
      * @param stepsPerStride        Number of steps you can cover in each stride
      * @param numberOfStepsInFlight Number of steps in a flight of stairs
