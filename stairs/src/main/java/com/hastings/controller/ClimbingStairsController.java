@@ -28,20 +28,20 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/")
-public class ClimbingStairsController {
+class ClimbingStairsController {
 
     private InputProcessingService inputProcessingService;
 
     @Autowired
-    public ClimbingStairsController(InputProcessingService inputProcessingService) {
+    ClimbingStairsController(InputProcessingService inputProcessingService) {
         this.inputProcessingService = inputProcessingService;
     }
 
     @GetMapping(produces = "application/json")
     ResponseEntity<Instruction> getInstructions() {
         String instruction = "Please supply input parameters:";
-        String input1 = "array listing the number of stairs";
-        String input2 = "number of steps per stride";
+        String input1 = "array listing the number of flights (between 1 - 30, containing max 20 steps)";
+        String input2 = "number of steps per stride (between 1 - 4)";
         return new ResponseEntity<Instruction>(new Instruction(instruction, input1, input2), HttpStatus.OK);
     }
 
@@ -51,20 +51,22 @@ public class ClimbingStairsController {
         return new ResponseEntity<ProblemOutput>(new ProblemOutput(minNumberOfStrides), HttpStatus.OK);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody ExceptionDetails
+    @ResponseBody
+    ExceptionDetails
     handleBadRequest(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
         List<String> errorMessage = fieldErrors.stream().map(fieldError -> fieldError.getDefaultMessage()).collect(Collectors.toList());
-        return new ExceptionDetails(HttpStatus.BAD_REQUEST.getReasonPhrase(), errorMessage.toString());
+        return new ExceptionDetails(HttpStatus.BAD_REQUEST, String.join(",", errorMessage));
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidStepsPerFlight.class)
-    @ResponseBody ExceptionDetails
+    @ResponseBody
+    ExceptionDetails
     handleBadRequest(InvalidStepsPerFlight ex) {
-        return new ExceptionDetails(HttpStatus.BAD_REQUEST.getReasonPhrase(), ex.getMessage());
+        return new ExceptionDetails(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
-
-
 }
