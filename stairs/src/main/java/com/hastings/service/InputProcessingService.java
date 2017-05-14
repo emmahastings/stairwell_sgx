@@ -1,6 +1,8 @@
 package com.hastings.service;
 
 import com.hastings.exception.InvalidStepsPerFlight;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 public class InputProcessingService {
 
     private static final int LANDING_STRIDES = 2;
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * Calculate the minimum number of strides required to reach top of a stairwell
@@ -31,6 +35,7 @@ public class InputProcessingService {
             if (flight >= 1 && flight <= 20) {
                 minNumberOfStride += calculateStridesForFlight(stepsPerStride, flight);
             } else {
+                logger.error("Invalid number of flights per step entered. Value entered: " + flight);
                 throw new InvalidStepsPerFlight("Steps per flight must be between 1 - 20");
             }
         }

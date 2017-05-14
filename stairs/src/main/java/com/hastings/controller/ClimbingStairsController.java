@@ -7,6 +7,8 @@ import com.hastings.model.Instruction;
 import com.hastings.model.ProblemInput;
 import com.hastings.model.ProblemOutput;
 import com.hastings.service.InputProcessingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,8 @@ import java.util.stream.Collectors;
 class ClimbingStairsController {
 
     private InputProcessingService inputProcessingService;
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     ClimbingStairsController(InputProcessingService inputProcessingService) {
@@ -59,6 +63,7 @@ class ClimbingStairsController {
         BindingResult result = ex.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
         List<String> errorMessage = fieldErrors.stream().map(fieldError -> fieldError.getDefaultMessage()).collect(Collectors.toList());
+        logger.error("Attempted POST request with following errors: " + errorMessage);
         return new ExceptionDetails(HttpStatus.BAD_REQUEST, String.join(",", errorMessage));
     }
 
