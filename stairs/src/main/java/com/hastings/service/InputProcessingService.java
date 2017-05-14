@@ -1,5 +1,6 @@
 package com.hastings.service;
 
+import com.hastings.exception.InvalidStepsPerFlight;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,13 +21,18 @@ public class InputProcessingService {
      *
      * @param numberOfStepsPerFlight An array containing the number of steps in each flight
      * @param stepsPerStride         Number of steps you can cover in each stride
+     * @throws InvalidStepsPerFlight A flight should have between 1 - 20 steps based on problem specification
      */
-    public int calculateMinNumberOfStrides(int[] numberOfStepsPerFlight, int stepsPerStride) {
+    public int calculateMinNumberOfStrides(int[] numberOfStepsPerFlight, int stepsPerStride) throws InvalidStepsPerFlight {
 
         int minNumberOfStride = 0;
 
         for (int flight : numberOfStepsPerFlight) {
-            minNumberOfStride += calculateStridesForFlight(stepsPerStride, flight);
+            if (flight >= 1 && flight <= 20) {
+                minNumberOfStride += calculateStridesForFlight(stepsPerStride, flight);
+            } else {
+                throw new InvalidStepsPerFlight("Steps per flight must be between 1 - 20");
+            }
         }
 
         // If the array supplied has more than one flight then calculate additional landing strides
