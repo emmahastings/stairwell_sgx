@@ -1,5 +1,7 @@
 package com.hastings.model;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * Created by emmakhastings on 13/05/2017.
  *
@@ -9,11 +11,11 @@ package com.hastings.model;
  */
 public class ExceptionDetails {
 
-    private String status;
+    private HttpStatus status;
 
     private String message;
 
-    public ExceptionDetails(String status, String message) {
+    public ExceptionDetails(HttpStatus status, String message) {
         this.status = status;
         this.message = message;
     }
@@ -22,7 +24,7 @@ public class ExceptionDetails {
         return message;
     }
 
-    public String getStatus() {
+    public HttpStatus getStatus() {
         return status;
     }
 }
