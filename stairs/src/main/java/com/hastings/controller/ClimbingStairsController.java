@@ -1,5 +1,6 @@
 package com.hastings.controller;
 
+import com.hastings.exception.InvalidStepsPerFlight;
 import com.hastings.exception.InvalidStepsPerStride;
 import com.hastings.model.ExceptionDetails;
 import com.hastings.model.Instruction;
@@ -45,7 +46,7 @@ public class ClimbingStairsController {
     }
 
     @PostMapping(produces = "application/json")
-    ResponseEntity<ProblemOutput> calculateMinNumberOfStrides(@RequestBody @Valid ProblemInput input) throws InvalidStepsPerStride {
+    ResponseEntity<ProblemOutput> calculateMinNumberOfStrides(@RequestBody @Valid ProblemInput input) throws InvalidStepsPerStride, InvalidStepsPerFlight {
         int minNumberOfStrides = inputProcessingService.calculateMinNumberOfStrides(input.getNumberOfStepsPerFlight(), input.getStepsPerStride());
         return new ResponseEntity<ProblemOutput>(new ProblemOutput(minNumberOfStrides), HttpStatus.OK);
     }
@@ -58,4 +59,12 @@ public class ClimbingStairsController {
         List<String> errorMessage = fieldErrors.stream().map(fieldError -> fieldError.getDefaultMessage()).collect(Collectors.toList());
         return new ExceptionDetails(HttpStatus.BAD_REQUEST.getReasonPhrase(), errorMessage.toString());
     }
+
+    @ExceptionHandler(InvalidStepsPerFlight.class)
+    @ResponseBody ExceptionDetails
+    handleBadRequest(InvalidStepsPerFlight ex) {
+        return new ExceptionDetails(HttpStatus.BAD_REQUEST.getReasonPhrase(), ex.getMessage());
+    }
+
+
 }
