@@ -7,14 +7,16 @@ Climbing stairs technical solution
 Before building make sure you have [maven](http://maven.apache.org) installed. Clone the project and follow either option below.
 
 ```bash
-cd stairs/
+git clone https://github.com/emmahastings/stairwell_sgx.git
+cd stairwell_sgx/stairs/
 mvn spring-boot:run
 ```
 
 In addition you can build a jar file 
 
 ```bash
-cd stairs/
+git clone https://github.com/emmahastings/stairwell_sgx.git
+cd stairwell_sgx/stairs/
 mvn clean package
 java -jar target/stairwell_sgx.jar
 ```
