@@ -97,6 +97,25 @@ public class ClimbingStairsControllerTest {
     }
 
     @Test
+    public void calculateMinNumberOfStrides_ZeroStepsPerStride_ShouldReturnBadRequest() throws Exception {
+
+        // Create test input and convert to JSON
+        ProblemInput input = new ProblemInput(new int[]{4, 4}, 0);
+        String jsonInString = objectMapper.writeValueAsString(input);
+
+        mockMvc.perform(post("/")
+                .content(jsonInString)
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("message").value("Steps per stride must be between 1 - 4"))
+                .andExpect(jsonPath("status").value("BAD_REQUEST"));
+
+        verifyZeroInteractions(inputProcessingService);
+    }
+
+
+    @Test
     public void calculateMinNumberOfStrides_NoFlights_ShouldReturnBadRequest() throws Exception {
 
         // Create test input and convert to JSON
