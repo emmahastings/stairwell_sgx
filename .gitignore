@@ -21,7 +21,3 @@ hs_err_pid*
 # Exclude IntelliJ files
 ########################
 *.iml
-
-# Exclude custom files
-#######################
-remarks.txt
