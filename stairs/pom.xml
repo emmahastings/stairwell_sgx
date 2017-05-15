@@ -27,7 +27,7 @@
     </properties>
 
     <build>
-        <finalName>stairwell_sgx.jar</finalName>
+        <finalName>stairwell_sgx</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
