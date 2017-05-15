@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @author emmakhastings
  *         <p>
  *         Service to handle user supplied input and calculate the minimum
- *         number of strides required to reach top of a stairwell
+ *         number of strides required to reach the top of a stairwell
  */
 @Service
 public class InputProcessingService {
