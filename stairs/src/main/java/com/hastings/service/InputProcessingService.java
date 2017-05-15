@@ -21,21 +21,21 @@ public class InputProcessingService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
-     * Calculate the minimum number of strides required to reach top of a stairwell
+     * Calculate the minimum number of strides required to the reach top of a stairwell
      *
-     * @param flights An array containing the number of steps in each flight
-     * @param stepsPerStride         Number of steps you can cover in each stride
+     * @param flights        An array containing the number of steps in each flight
+     * @param stepsPerStride Number of steps you can cover in each stride
      * @throws InvalidStepsPerFlight A flight should have between 1 - 20 steps based on problem specification
      */
     public int calculateMinNumberOfStrides(int[] flights, int stepsPerStride) throws InvalidStepsPerFlight {
 
         int minNumberOfStride = 0;
 
-        for (int flight : flights) {
-            if (flight >= 1 && flight <= 20) {
-                minNumberOfStride += calculateStridesForFlight(stepsPerStride, flight);
+        for (int flightSteps : flights) {
+            if (flightSteps >= 1 && flightSteps <= 20) {
+                minNumberOfStride += calculateStridesForFlight(stepsPerStride, flightSteps);
             } else {
-                logger.error("Invalid number of flights per step entered. Value entered: " + flight);
+                logger.error("Invalid number of flights per step entered. Value entered: " + flightSteps);
                 throw new InvalidStepsPerFlight("Steps per flight must be between 1 - 20");
             }
         }
@@ -49,18 +49,30 @@ public class InputProcessingService {
 
     /**
      * Calculate strides used to ascend a flight
-     * by subtracting steps until there are no stairs left while tracking strides used.
      *
-     * @param stepsPerStride        Number of steps you can cover in each stride
-     * @param numberOfStepsInFlight Number of steps in a flight of stairs
+     * @param stepsPerStride Number of steps you can cover in each stride
+     * @param flightSteps    Number of steps in a flight of stairs
      */
-    private int calculateStridesForFlight(int stepsPerStride, int numberOfStepsInFlight) {
+    private int calculateStridesForFlight(int stepsPerStride, int flightSteps) {
         int stridesUsed = 0;
-        while (numberOfStepsInFlight > 0) {
-            numberOfStepsInFlight -= stepsPerStride;
-            stridesUsed++;
+        return count(stridesUsed, stepsPerStride, flightSteps);
+    }
+
+    /**
+     * Recursive algorithm counting steps used until the amount of steps remaining can be climbed in one stride
+     *
+     * @param stridesUsed    counter holding the number of strides used
+     * @param stepsPerStride Number of steps you can cover in each stride
+     * @param flightSteps    Number of steps in a flight of stairs
+     */
+    private int count(int stridesUsed, int stepsPerStride, int flightSteps) {
+        if (flightSteps <= stepsPerStride) {
+            return stridesUsed + 1;
+        } else {
+            flightSteps -= stepsPerStride;
+            stridesUsed += 1;
+            return count(stridesUsed, stepsPerStride, flightSteps);
         }
-        return stridesUsed;
     }
 
     /**
