@@ -56,9 +56,8 @@ class ClimbingStairsController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
-    ExceptionDetails
-    handleBadRequest(MethodArgumentNotValidException ex) {
+    @ResponseBody ExceptionDetails
+    handleInvalidArguementsRequest(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
         List<String> errorMessage = fieldErrors.stream().map(fieldError -> fieldError.getDefaultMessage()).collect(Collectors.toList());
@@ -68,9 +67,8 @@ class ClimbingStairsController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidStepsPerFlight.class)
-    @ResponseBody
-    ExceptionDetails
-    handleBadRequest(InvalidStepsPerFlight ex) {
+    @ResponseBody ExceptionDetails
+    handleInvalidStepsPerFlightRequest(InvalidStepsPerFlight ex) {
         return new ExceptionDetails(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 }
