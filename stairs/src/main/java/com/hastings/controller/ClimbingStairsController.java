@@ -62,7 +62,7 @@ class ClimbingStairsController {
         List<FieldError> fieldErrors = result.getFieldErrors();
         List<String> errorMessage = fieldErrors.stream().map(fieldError -> fieldError.getDefaultMessage()).collect(Collectors.toList());
         logger.error("Attempted POST request with following errors: " + errorMessage);
-        return new ExceptionDetails(HttpStatus.BAD_REQUEST, String.join(",", errorMessage));
+        return new ExceptionDetails(HttpStatus.BAD_REQUEST, String.join(", ", errorMessage));
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
