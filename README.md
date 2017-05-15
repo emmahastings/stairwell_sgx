@@ -4,9 +4,7 @@ Climbing stairs technical solution
 
 ### Building this Project
 
-Before building make sure you have[maven](http://maven.apache.org)installed.
-
-Clone this project, change to the root stairs directory and run
+Before building make sure you have [maven](http://maven.apache.org) installed. Clone the project and follow either option below.
 
 ```bash
 cd stairs/
@@ -26,8 +24,6 @@ java -jar target/stairwell_sgx.jar
 ```bash
 curl -H "Content-Type: application/json" -X POST -d '{"flights":["17"],"stepsPerStride":"3"}' localhost:8080
 ```
-
-curl -H "Content-Type: application/json" -X POST -d '{"flights":["17"],"stepsPerStride":"3"}' localhost:8080
 
 ### Authors and Contributors
 Emma Hastings (@emmahastings)
