@@ -51,7 +51,7 @@ class ClimbingStairsController {
 
     @PostMapping(produces = "application/json")
     ResponseEntity<ProblemOutput> calculateMinNumberOfStrides(@RequestBody @Valid ProblemInput input) throws InvalidStepsPerStride, InvalidStepsPerFlight {
-        int minNumberOfStrides = inputProcessingService.calculateMinNumberOfStrides(input.getNumberOfStepsPerFlight(), input.getStepsPerStride());
+        int minNumberOfStrides = inputProcessingService.calculateMinNumberOfStrides(input.getFlights(), input.getStepsPerStride());
         return new ResponseEntity<ProblemOutput>(new ProblemOutput(minNumberOfStrides), HttpStatus.OK);
     }
 

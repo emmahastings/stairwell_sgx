@@ -17,7 +17,7 @@ public class ProblemInput {
 
     @NotNull(message = "Number of steps per flight cannot be null")
     @Size(message = "A stairwell must have between 1 - 30 flights", min = 1, max = 30)
-    private int[] numberOfStepsPerFlight;
+    private int[] flights;
 
     @Min(value = 1, message = "Steps per stride must be between 1 - 4")
     @Max(value = 4, message = "Steps per stride must be between 1 - 4")
@@ -26,13 +26,13 @@ public class ProblemInput {
     public ProblemInput() {
     }
 
-    public ProblemInput(int[] numberOfStepsPerFlight, int stepsPerStride) {
-        this.numberOfStepsPerFlight = numberOfStepsPerFlight;
+    public ProblemInput(int[] flights, int stepsPerStride) {
+        this.flights = flights;
         this.stepsPerStride = stepsPerStride;
     }
 
-    public int[] getNumberOfStepsPerFlight() {
-        return numberOfStepsPerFlight;
+    public int[] getFlights() {
+        return flights;
     }
 
     public int getStepsPerStride() {
